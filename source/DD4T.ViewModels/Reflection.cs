@@ -77,7 +77,7 @@ namespace DD4T.ViewModels.Reflection
         /// <param name="type"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public IViewModel ResolveModel(Type type, IModel data)
+        public IViewModel ResolveModel(Type type, IRepositoryLocal data)
         {
             //Use explicit cast or "as" cast? Using as will result in null return value if the Type passed in doesn't implement IViewModel
             //Using explicit cast (IViewModel) will result in InvalidCastException if Type doesn't implement IViewModel

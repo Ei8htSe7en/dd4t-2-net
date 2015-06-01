@@ -175,7 +175,7 @@ namespace DD4T.ViewModels.XPM
             bool result = false;
             if (model != null && model.ModelData != null)
             {
-                result = XpmMarkupService.IsSiteEditEnabled(model.ModelData.PublicationNumber);
+                result = XpmMarkupService.IsSiteEditEnabled(model.ModelData);
             }
             return result;
         }

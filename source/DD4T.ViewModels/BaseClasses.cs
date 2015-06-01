@@ -15,7 +15,7 @@ namespace DD4T.ViewModels.Base
     public abstract class ViewModelBase : IViewModel
     {
         [EditorBrowsable(EditorBrowsableState.Never)] //Hidden from intellisense as View Authors should not access this directly
-        public IModel ModelData
+        public IRepositoryLocal ModelData
         {
             get;
             set;

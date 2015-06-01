@@ -19,7 +19,7 @@ namespace DD4T.ViewModels.Exceptions
         { }
 
         //TODO: REfactor to check type and use other overloads
-        public ViewModelTypeNotFoundException(IModel data)
+        public ViewModelTypeNotFoundException(IRepositoryLocal data)
             : base(String.Format("Could not find view model for item with Publication ID '{0}'", data.PublicationNumber))
         { }
     }

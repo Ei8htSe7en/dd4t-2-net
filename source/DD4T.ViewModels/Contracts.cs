@@ -23,13 +23,13 @@ namespace DD4T.ViewModels.Contracts
         /// <summary>
         /// Consolidated data for this View Model
         /// </summary>
-        IModel ModelData { get; set; }
+        IRepositoryLocal ModelData { get; set; }
     }
 
     /// <summary>
     /// Special container to enable passing Embedded Schema Fields as a standalone Model.
     /// </summary>
-    public interface IEmbeddedFields : IModel
+    public interface IEmbeddedFields : IRepositoryLocal
     {
         IFieldSet Fields { get; }
         ISchema EmbeddedSchema { get; }
@@ -64,7 +64,7 @@ namespace DD4T.ViewModels.Contracts
         /// <param name="type">View Model Type to resolve</param>
         /// <param name="data">View Model Data for context</param>
         /// <returns>An instance of a View Model of the input Type</returns>
-        IViewModel ResolveModel(Type type, IModel data);
+        IViewModel ResolveModel(Type type, IRepositoryLocal data);
         /// <summary>
         /// Gets a list of Model Property objects for all Properties marked with an IPropertyAttribute Attribute for the given Type
         /// </summary>
@@ -157,14 +157,14 @@ namespace DD4T.ViewModels.Contracts
         /// <param name="data">View Model Data to search for</param>
         /// <param name="typesToSearch">Optional array of possible Types to search through</param>
         /// <returns>View Model Type</returns>
-        Type FindViewModelByAttribute<T>(IModel data, Type[] typesToSearch = null) where T : IModelAttribute;
+        Type FindViewModelByAttribute<T>(IRepositoryLocal data, Type[] typesToSearch = null) where T : IModelAttribute;
         /// <summary>
         /// Sets the value of a single Model Property
         /// </summary>
         /// <param name="model">View Model</param>
         /// <param name="data">Model data</param>
         /// <param name="property">Property to set</param>
-        void SetPropertyValue(object model, IModel data, IModelProperty property);
+        void SetPropertyValue(object model, IRepositoryLocal data, IModelProperty property);
         /// <summary>
         /// Sets the value of a single Model Property
         /// </summary>
@@ -185,7 +185,7 @@ namespace DD4T.ViewModels.Contracts
         /// <param name="modelData">Model Data</param>
         /// <returns>A View Model</returns>
         /// <remarks>Requires LoadViewModels to have been used.</remarks>
-        IViewModel BuildViewModel(IModel modelData);
+        IViewModel BuildViewModel(IRepositoryLocal modelData);
         /// <summary>
         /// Builds a View Model, inferring the Type based on the Model Data and filtering possible Model Types by an Attribute.
         /// </summary>
@@ -197,21 +197,21 @@ namespace DD4T.ViewModels.Contracts
         /// or Keyword Models to increase performance.
         /// Requires LoadViewModels to have been used.
         /// </remarks>
-        IViewModel BuildViewModelByAttribute<T>(IModel modelData) where T : IModelAttribute;
+        IViewModel BuildViewModelByAttribute<T>(IRepositoryLocal modelData) where T : IModelAttribute;
         /// <summary>
         /// Builds a View Model of the specified type.
         /// </summary>
         /// <param name="type">Specific type of View Model to build - must implement IViewModel</param>
         /// <param name="modelData">Model Data</param>
         /// <returns>View Model</returns>
-        IViewModel BuildViewModel(Type type, IModel modelData); //Does this need to be publicly exposed?
+        IViewModel BuildViewModel(Type type, IRepositoryLocal modelData); //Does this need to be publicly exposed?
         /// <summary>
         /// Builds a View Model of the specified type.
         /// </summary>
         /// <typeparam name="T">Specific type of View Model to build</typeparam>
         /// <param name="modelData">Model Data</param>
         /// <returns>View Model</returns>
-        T BuildViewModel<T>(IModel modelData) where T : IViewModel;
+        T BuildViewModel<T>(IRepositoryLocal modelData) where T : IViewModel;
         /*Anyway to move these to separate Binding library? Appears not because IPropertyAttribute is dependent on IModelMapping and all 
          * GetPropertyValues are only passed a IViewModelFactory so there's no other way to access the Mapped Model methods
         */
@@ -223,7 +223,7 @@ namespace DD4T.ViewModels.Contracts
         /// <param name="modelData">Model Data</param>
         /// <param name="mapping">Model Mapping</param>
         /// <returns>Fully built model</returns>
-        T BuildMappedModel<T>(T model, IModel modelData, IModelMapping mapping); //where T : class;
+        T BuildMappedModel<T>(T model, IRepositoryLocal modelData, IModelMapping mapping); //where T : class;
         /// <summary>
         /// Builds a new model using a specific mapping
         /// </summary>
@@ -231,14 +231,14 @@ namespace DD4T.ViewModels.Contracts
         /// <param name="modelData">Model Data</param>
         /// <param name="mapping">Model Mapping</param>
         /// <returns>New model</returns>
-        T BuildMappedModel<T>(IModel modelData, IModelMapping mapping); //where T : class;
+        T BuildMappedModel<T>(IRepositoryLocal modelData, IModelMapping mapping); //where T : class;
         /// <summary>
         /// Builds a new model using a specific mapping
         /// </summary>
         /// <param name="modelData">Model data</param>
         /// <param name="mapping">Model mapping</param>
         /// <returns>New model</returns>
-        object BuildMappedModel(IModel modelData, IModelMapping mapping);
+        object BuildMappedModel(IRepositoryLocal modelData, IModelMapping mapping);
         /// <summary>
         /// The associate model resolver for this instance
         /// </summary>
@@ -266,7 +266,7 @@ namespace DD4T.ViewModels.Contracts
         /// </summary>
         /// <param name="item">Item</param>
         /// <returns></returns>
-        bool IsSiteEditEnabled(IItem item);
+        bool IsSiteEditEnabled(IRepositoryLocal item);
         /// <summary>
         /// Determines if Site Edit is enabeld for a publication
         /// </summary>
@@ -356,7 +356,7 @@ namespace DD4T.ViewModels.Contracts
         /// </summary>
         /// <param name="model">View Model Data to retrieve a key for</param>
         /// <returns>View Model Key</returns>
-        string GetViewModelKey(IModel model);
+        string GetViewModelKey(IRepositoryLocal model);
     }
 
     /// <summary>
@@ -523,7 +523,7 @@ namespace DD4T.ViewModels.Contracts
         /// <param name="propertyType">Actual return type of the Property</param>
         /// <param name="builder">A View Model Builder</param>
         /// <returns>Property value</returns>
-        IEnumerable GetPropertyValues(IModel modelData, IModelProperty property, IViewModelFactory builder = null); //Strongly consider offloading some of the work to IModelProperty -- e.g. IsMultiValue, AddToCollection, etc.
+        IEnumerable GetPropertyValues(IRepositoryLocal modelData, IModelProperty property, IViewModelFactory builder = null); //Strongly consider offloading some of the work to IModelProperty -- e.g. IsMultiValue, AddToCollection, etc.
         /// <summary>
         /// Optional mapping if the Property is a Complex Type. This should only set by a Binding Module.
         /// </summary>
@@ -631,7 +631,7 @@ namespace DD4T.ViewModels.Contracts
         /// <param name="data">View Model Data to compare</param>
         /// <param name="key">View Model Key</param>
         /// <returns>True if it matches, false if not</returns>
-        bool IsMatch(IModel data, string key);
+        bool IsMatch(IRepositoryLocal data, string key);
     }
     /// <summary>
     /// An Attribute for identifying a Defined (has a Schema) View Model class

@@ -18,7 +18,7 @@ namespace DD4T.ViewModels.Attributes
     /// </summary>
     public abstract class ModelPropertyAttributeBase : Attribute, IPropertyAttribute
     {
-        public abstract IEnumerable GetPropertyValues(IModel modelData, IModelProperty property, IViewModelFactory factory);
+        public abstract IEnumerable GetPropertyValues(IRepositoryLocal modelData, IModelProperty property, IViewModelFactory factory);
         /// <summary>
         /// When overriden in a derived class, this property returns the expected return type of the View Model property.
         /// </summary>
@@ -52,7 +52,7 @@ namespace DD4T.ViewModels.Attributes
         public FieldAttributeBase()
         { }
         
-        public override IEnumerable GetPropertyValues(IModel modelData, IModelProperty property, IViewModelFactory factory)
+        public override IEnumerable GetPropertyValues(IRepositoryLocal modelData, IModelProperty property, IViewModelFactory factory)
         {
             IEnumerable result = null;
             if (modelData != null)
@@ -155,7 +155,7 @@ namespace DD4T.ViewModels.Attributes
     /// </summary>
     public abstract class ComponentAttributeBase : ModelPropertyAttributeBase, IComponentAttribute
     {
-        public override IEnumerable GetPropertyValues(IModel modelData, IModelProperty property, IViewModelFactory factory)
+        public override IEnumerable GetPropertyValues(IRepositoryLocal modelData, IModelProperty property, IViewModelFactory factory)
         {
             IEnumerable result = null;
             if (modelData != null)
@@ -201,7 +201,7 @@ namespace DD4T.ViewModels.Attributes
         /// <returns>The Property value</returns>
         public abstract IEnumerable GetPropertyValues(ITemplate template, Type propertyType, IViewModelFactory factory);
 
-        public override IEnumerable GetPropertyValues(IModel modelData, IModelProperty property, IViewModelFactory factory)
+        public override IEnumerable GetPropertyValues(IRepositoryLocal modelData, IModelProperty property, IViewModelFactory factory)
         {
             IEnumerable result = null;
             if (modelData != null && modelData is IComponentPresentation
@@ -228,7 +228,7 @@ namespace DD4T.ViewModels.Attributes
         /// <returns>The Property value</returns>
         public abstract IEnumerable GetPropertyValues(IPage page, Type propertyType, IViewModelFactory factory);
 
-        public override IEnumerable GetPropertyValues(IModel modelData, IModelProperty property, IViewModelFactory factory)
+        public override IEnumerable GetPropertyValues(IRepositoryLocal modelData, IModelProperty property, IViewModelFactory factory)
         {
             IEnumerable result = null;
             if (modelData is IPage)
@@ -256,7 +256,7 @@ namespace DD4T.ViewModels.Attributes
         /// <returns>The Property value</returns>
         public abstract IEnumerable GetPresentationValues(IList<IComponentPresentation> cps, IModelProperty property, IViewModelFactory factory);
 
-        public override IEnumerable GetPropertyValues(IModel modelData, IModelProperty property, IViewModelFactory factory)
+        public override IEnumerable GetPropertyValues(IRepositoryLocal modelData, IModelProperty property, IViewModelFactory factory)
         {
             IEnumerable result = null;
             if (modelData is IPage)
@@ -371,13 +371,13 @@ namespace DD4T.ViewModels.Attributes
             return false;
         }
 
-        public bool IsMatch(IModel data, string key)
+        public bool IsMatch(IRepositoryLocal data, string key)
         {
             bool result = false;
-            string schemaName = null;
             if (data != null)
             {
                 //Ideally we'd have a common interface for these 2 that have a Schema property
+                string schemaName = null;
                 if (data is IComponent)
                 {
                     var definedData = data as IComponent;
@@ -416,7 +416,7 @@ namespace DD4T.ViewModels.Attributes
             set;
         }
 
-        public bool IsMatch(IModel data, string key)
+        public bool IsMatch(IRepositoryLocal data, string key)
         {
             bool result = false;
             if (data is IPage)
@@ -447,7 +447,7 @@ namespace DD4T.ViewModels.Attributes
             set;
         }
 
-        public bool IsMatch(IModel data, string key)
+        public bool IsMatch(IRepositoryLocal data, string key)
         {
             bool result = false;
             if (data is IKeyword)
@@ -476,7 +476,7 @@ namespace DD4T.ViewModels.Attributes
             return fieldValue;
         }
 
-        protected virtual object BuildModel(IViewModelFactory factory, IModel data)
+        protected virtual object BuildModel(IViewModelFactory factory, IRepositoryLocal data)
         {
             object result = null;
             if (ComplexTypeMapping != null)
@@ -493,8 +493,8 @@ namespace DD4T.ViewModels.Attributes
 
         public abstract IEnumerable GetRawValues(IField field);
 
-        protected abstract IModel BuildModelData(object value, IField field, ITemplate template);
-        protected abstract Type GetModelType(IModel data, IViewModelFactory factory);
+        protected abstract IRepositoryLocal BuildModelData(object value, IField field, ITemplate template);
+        protected abstract Type GetModelType(IRepositoryLocal data, IViewModelFactory factory);
         protected abstract bool ReturnRawData { get; }
 
         public override Type ExpectedReturnType

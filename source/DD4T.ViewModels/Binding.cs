@@ -22,10 +22,10 @@ namespace DD4T.ViewModels.Binding
     public interface IMappedModelFactory
     {
         //void AddModelMapping<T>(IModelMapping<T> mapping); //Doesn't seem possible to store a collection of different generics without making the whole Factory generic
-        //T BuildMappedModel<T>(IModel modelData) where T : class, new();
-        T BuildMappedModel<T>(T model, IModel modelData, IModelMapping mapping); //where T : class;
-        T BuildMappedModel<T>(IModel modelData, IModelMapping mapping); //where T : class;
-        object BuildMappedModel(IModel modelData, IModelMapping mapping);
+        //T BuildMappedModel<T>(IRepositoryLocal modelData) where T : class, new();
+        T BuildMappedModel<T>(T model, IRepositoryLocal modelData, IModelMapping mapping); //where T : class;
+        T BuildMappedModel<T>(IRepositoryLocal modelData, IModelMapping mapping); //where T : class;
+        object BuildMappedModel(IRepositoryLocal modelData, IModelMapping mapping);
     }
     public interface IModelMapping
     {

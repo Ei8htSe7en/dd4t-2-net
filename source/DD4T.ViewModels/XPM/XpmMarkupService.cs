@@ -26,18 +26,9 @@ namespace DD4T.ViewModels.XPM
             return SiteEditService.GenerateSiteEditComponentTag(cp, region); 
         }
 
-        public bool IsSiteEditEnabled(IItem item)
+        public bool IsSiteEditEnabled(IRepositoryLocal item)
         {
-            int publicationId = 0;
-            try
-            {
-                publicationId = new TcmUri(item.Id).PublicationId;
-            }
-            catch (Exception) 
-            {
-                publicationId = 0;
-            }
-            return IsSiteEditEnabled(publicationId);
+            return SiteEditService.IsSiteEditEnabled(item);
         }
 
         public bool IsSiteEditEnabled(int publicationId)

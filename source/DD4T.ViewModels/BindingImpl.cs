@@ -23,19 +23,19 @@ namespace DD4T.ViewModels.Binding
         {
             this.factory = factory;
         }
-        public virtual object BuildMappedModel(IModel modelData, IModelMapping mapping)
+        public virtual object BuildMappedModel(IRepositoryLocal modelData, IModelMapping mapping)
         {
             var model = factory.ModelResolver.ResolveInstance(mapping.ModelType);
             return BuildMappedModel(model, modelData, mapping);
         }
 
-        public virtual T BuildMappedModel<T>(IModel modelData, IModelMapping mapping) //where T: class
+        public virtual T BuildMappedModel<T>(IRepositoryLocal modelData, IModelMapping mapping) //where T: class
         {
             T model = (T)factory.ModelResolver.ResolveInstance(typeof(T));
             return BuildMappedModel<T>(model, modelData, mapping);
         }
 
-        public virtual T BuildMappedModel<T>(T model, IModel modelData, IModelMapping mapping) //where T : class
+        public virtual T BuildMappedModel<T>(T model, IRepositoryLocal modelData, IModelMapping mapping) //where T : class
         {
             foreach (var property in mapping.ModelProperties)
             {

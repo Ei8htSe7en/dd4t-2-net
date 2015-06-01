@@ -77,7 +77,7 @@ namespace DD4T.ViewModels
     public abstract class ViewModelKeyProviderBase : IViewModelKeyProvider
     {
         protected string ViewModelKeyField = string.Empty;
-        public string GetViewModelKey(IModel modelData)
+        public string GetViewModelKey(IRepositoryLocal modelData)
         {
             string result = null;
             if (modelData != null)
@@ -187,6 +187,26 @@ namespace DD4T.ViewModels
         public int PublicationNumber
         {
             get { return Template == null ? -1 : Template.PublicationNumber; }
+        }
+
+        public IPublication Publication
+        {
+            get { return Template != null ? Template.Publication : null; }
+        }
+
+        public IPublication OwningPublication
+        {
+            get { return Template != null ? Template.OwningPublication : null; }
+        }
+
+        public string Id
+        {
+            get { return String.Empty; }
+        }
+
+        public string Title
+        {
+            get { return String.Empty; }
         }
     }
 }

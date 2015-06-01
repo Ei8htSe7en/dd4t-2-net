@@ -31,7 +31,7 @@ namespace DD4T.ViewModels.Attributes
             set;
         }
 
-        protected override IModel BuildModelData(object value, IField field, ITemplate template)
+        protected override IRepositoryLocal BuildModelData(object value, IField field, ITemplate template)
         {
             return new EmbeddedFields
             {
@@ -42,7 +42,7 @@ namespace DD4T.ViewModels.Attributes
             };
         }
 
-        protected override Type GetModelType(IModel data, IViewModelFactory factory)
+        protected override Type GetModelType(IRepositoryLocal data, IViewModelFactory factory)
         {
             return EmbeddedModelType;
         }
@@ -79,7 +79,7 @@ namespace DD4T.ViewModels.Attributes
             get;
             set;
         }
-        protected override IModel BuildModelData(object value, IField field, ITemplate template)
+        protected override IRepositoryLocal BuildModelData(object value, IField field, ITemplate template)
         {
             //Assuming the use of DD4T Content Model here
             var component = (Component)value;
@@ -90,7 +90,7 @@ namespace DD4T.ViewModels.Attributes
             };
         }
 
-        protected override Type GetModelType(IModel data, IViewModelFactory factory)
+        protected override Type GetModelType(IRepositoryLocal data, IViewModelFactory factory)
         {
             Type result = null;
             try
@@ -120,13 +120,13 @@ namespace DD4T.ViewModels.Attributes
             return field.Keywords;
         }
         public Type KeywordType { get; set; }
-        protected override IModel BuildModelData(object value, IField field, ITemplate template)
+        protected override IRepositoryLocal BuildModelData(object value, IField field, ITemplate template)
         {
             var keyword = (IKeyword)value;
             return keyword;
         }
 
-        protected override Type GetModelType(IModel data, IViewModelFactory factory)
+        protected override Type GetModelType(IRepositoryLocal data, IViewModelFactory factory)
         {
             return KeywordType;
         }

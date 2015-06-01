@@ -302,9 +302,9 @@ namespace DD4T.ViewModels.Attributes
 
 
 
-    public class KeywordDataAttribute : ModelPropertyAttributeBase
+    public class KeywordAttribute : ModelPropertyAttributeBase
     {
-        public override IEnumerable GetPropertyValues(IModel modelData, IModelProperty property, IViewModelFactory factory)
+        public override IEnumerable GetPropertyValues(IRepositoryLocal modelData, IModelProperty property, IViewModelFactory factory)
         {
             IEnumerable result = null;
             if (modelData != null && modelData is IKeyword)

@@ -54,7 +54,7 @@ namespace DD4T.ViewModels
                 }
             }
         }
-        public Type FindViewModelByAttribute<T>(IModel data, Type[] typesToSearch = null) where T : IModelAttribute
+        public Type FindViewModelByAttribute<T>(IRepositoryLocal data, Type[] typesToSearch = null) where T : IModelAttribute
         {
             //Anyway to speed this up? Better than just a straight up loop?
             typesToSearch = typesToSearch ?? viewModels.Where(x => x.Key is T).Select(x => x.Value).ToArray();
@@ -68,7 +68,7 @@ namespace DD4T.ViewModels
             throw new ViewModelTypeNotFoundException(data);
         }
 
-        public void SetPropertyValue(object model, IModel data, IModelProperty property)
+        public void SetPropertyValue(object model, IRepositoryLocal data, IModelProperty property)
         {
             if (property == null) throw new ArgumentNullException("property");
             if (model != null && data != null && property.PropertyAttribute != null)
@@ -101,12 +101,12 @@ namespace DD4T.ViewModels
             SetPropertyValue(model, property);
         }
 
-        public IViewModel BuildViewModel(IModel modelData)
+        public IViewModel BuildViewModel(IRepositoryLocal modelData)
         {
             return BuildViewModelByAttribute<IModelAttribute>(modelData);
         }
 
-        public IViewModel BuildViewModelByAttribute<T>(IModel modelData) where T : IModelAttribute
+        public IViewModel BuildViewModelByAttribute<T>(IRepositoryLocal modelData) where T : IModelAttribute
         {
             IViewModel result = null;
             Type type = FindViewModelByAttribute<T>(modelData);
@@ -116,7 +116,7 @@ namespace DD4T.ViewModels
             }
             return result;
         }
-        public IViewModel BuildViewModel(Type type, IModel modelData)
+        public IViewModel BuildViewModel(Type type, IRepositoryLocal modelData)
         {
             IViewModel viewModel = null;
             viewModel = resolver.ResolveModel(type, modelData);
@@ -125,26 +125,26 @@ namespace DD4T.ViewModels
             return viewModel;
         }
 
-        public T BuildViewModel<T>(IModel modelData) where T : IViewModel 
+        public T BuildViewModel<T>(IRepositoryLocal modelData) where T : IViewModel 
         {
             return (T)BuildViewModel(typeof(T), modelData);
         }
 
         public IViewModelResolver ModelResolver { get { return resolver; } }
 
-        public virtual object BuildMappedModel(IModel modelData, IModelMapping mapping)
+        public virtual object BuildMappedModel(IRepositoryLocal modelData, IModelMapping mapping)
         {
             var model = resolver.ResolveInstance(mapping.ModelType);
             return BuildMappedModel(model, modelData, mapping);
         }
 
-        public virtual T BuildMappedModel<T>(IModel modelData, IModelMapping mapping) //where T: class
+        public virtual T BuildMappedModel<T>(IRepositoryLocal modelData, IModelMapping mapping) //where T: class
         {
             T model = (T)resolver.ResolveInstance(typeof(T));
             return BuildMappedModel<T>(model, modelData, mapping);
         }
 
-        public virtual T BuildMappedModel<T>(T model, IModel modelData, IModelMapping mapping) //where T : class
+        public virtual T BuildMappedModel<T>(T model, IRepositoryLocal modelData, IModelMapping mapping) //where T : class
         {
             foreach (var property in mapping.ModelProperties)
             {
@@ -212,7 +212,7 @@ namespace DD4T.ViewModels
             }
             return result;
         }
-        private string[] GetViewModelKey(IModel model)
+        private string[] GetViewModelKey(IRepositoryLocal model)
         {
             string key = keyProvider.GetViewModelKey(model);
             return String.IsNullOrEmpty(key) ? null : new string[] { key };
